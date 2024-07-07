@@ -14,7 +14,8 @@ export class News extends Component {
    static defaultProps ={
          country : 'in',
          pageSize: 8,
-         category: 'general'
+         category: 'general',
+
    }
 
    static propTypes = {
@@ -34,13 +35,16 @@ export class News extends Component {
          loading : false,
          page : 1,
          totalResults: 0,
-          mode: 'light'
+          mode: 'light',
+          hasMore : true
+        
 
       }
       document.title = `${this.capital(this.props.category)} - NewMonkey`;
       this.toggleMode = this.toggleMode.bind(this);
 
    }
+   
 
    toggleMode() {
       this.setState(prevState => ({
@@ -52,6 +56,7 @@ export class News extends Component {
    async componentDidMount(){
       let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9cb1de8c9fa7477d934edbaf5fc368cf&page=1&pageSize=${this.props.pageSize}`;
       this.setState({loading:true});
+      this.fetchMoreData();
       let data =await fetch(url);
       let parsedData= await data.json();
       console.log(parsedData);
@@ -59,6 +64,9 @@ export class News extends Component {
          totalResults:parsedData.totalResults,
       loading: false});
    }
+
+   
+  
 
    handlePreClick=async ()=>{
       console.log("pre");
@@ -99,10 +107,12 @@ export class News extends Component {
       let data =await fetch(url);
       let parsedData= await data.json();
       console.log(parsedData);
-      this.setState({articles: this.state.articles.concat(parsedData.articles),
+      this.setState({articles: this.state.articles?.concat(parsedData.articles),
          totalResults:parsedData.totalResults,
       loading: false})
     };
+
+   
 
   render() {
    const { mode } = this.state;
@@ -112,14 +122,14 @@ export class News extends Component {
          {this.state.loading && <Spinner/>};
 
          <InfiniteScroll
-          dataLength={this.state.articles.length}
+          dataLength={this.state.articles?.length}
           next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          hasMore={this.state.articles?.length !== this.state.totalResults}
           loader={<Spinner className="my-3"/>}
         >
          <div className={`container container-${mode} bg-${!mode}`}>
          <div className="row md-3">
-            {this.state.articles.map((element)=>{
+            {this.state.articles?.map((element)=>{
            return <div className="col-md-3"  key={element.url}>
            <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,80):""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} mode = {mode}/>
            </div>

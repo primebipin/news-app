@@ -7,7 +7,7 @@ import News from './Components/News';
 // import NewsItem from './Components/NewsItem';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
