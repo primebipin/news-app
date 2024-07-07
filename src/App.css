@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+a.dark {
+  color: white !important; /* Adding !important as a last resort */
+}
+
+a.light {
+  color: black !important; /* Adding !important as a last resort */
+}

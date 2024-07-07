@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+// import { Link } from 'react-router-dom';
 
 import NewsItem from './NewsItem'
 
 import Spinner from './Spinner';
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
-
 
 
 
@@ -33,11 +33,21 @@ export class News extends Component {
          articles: [],
          loading : false,
          page : 1,
-         totalResults: 0
+         totalResults: 0,
+          mode: 'light'
 
       }
       document.title = `${this.capital(this.props.category)} - NewMonkey`;
+      this.toggleMode = this.toggleMode.bind(this);
+
    }
+
+   toggleMode() {
+      this.setState(prevState => ({
+        mode: prevState.mode === 'light' ? 'dark' : 'light'
+        
+      }));
+    }
 
    async componentDidMount(){
       let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9cb1de8c9fa7477d934edbaf5fc368cf&page=1&pageSize=${this.props.pageSize}`;
@@ -95,9 +105,10 @@ export class News extends Component {
     };
 
   render() {
+   const { mode } = this.state;
     return (
       <>
-         <h1 className='text-center'>NewsMonkey - {this.capital(this.props.category)} Top headLines </h1>
+         <h1 className={`text-center  bg-${!mode}`} >NewsMonkey - {this.capital(this.props.category)} Top headLines </h1>
          {this.state.loading && <Spinner/>};
 
          <InfiniteScroll
@@ -106,11 +117,11 @@ export class News extends Component {
           hasMore={this.state.articles.length !== this.state.totalResults}
           loader={<Spinner className="my-3"/>}
         >
-         <div className="container">
+         <div className={`container container-${mode} bg-${!mode}`}>
          <div className="row md-3">
             {this.state.articles.map((element)=>{
-           return <div className="col-md-3" key={element.url}>
-           <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,80):""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name}/>
+           return <div className="col-md-3"  key={element.url}>
+           <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,80):""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} mode = {mode}/>
            </div>
   })}
        

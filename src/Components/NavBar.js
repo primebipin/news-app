@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
+// import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
-export class NavBar extends Component {
- 
-
-  render() {
+export default function Navbar(props) {
     return (
       <div>
-         <nav className="navbar navbar-expand-lg bg-body-tertiary">
+         <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
             <div className="container-fluid">
                <Link className="navbar-brand"to="/">NewsMonkey</Link>
                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,17 +27,13 @@ export class NavBar extends Component {
                 
                   </ul>
                      
-                  <div class="form-check form-switch">
-                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                     <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
-                  </div>
-
+                  <div className={`form-check form-switch text-${props.mode==='light'?'dark':'light'}`}>
+         <input className="form-check-input" onClick={props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Dark mode</label>
+      </div>
                </div>
             </div>
          </nav>
       </div>
     )
   }
-}
-
-export default NavBar
