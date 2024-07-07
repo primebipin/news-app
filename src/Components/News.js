@@ -56,7 +56,6 @@ export class News extends Component {
    async componentDidMount(){
       let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=9cb1de8c9fa7477d934edbaf5fc368cf&page=1&pageSize=${this.props.pageSize}`;
       this.setState({loading:true});
-      this.fetchMoreData();
       let data =await fetch(url);
       let parsedData= await data.json();
       console.log(parsedData);
@@ -131,7 +130,7 @@ export class News extends Component {
          <div className="row md-3">
             {this.state.articles?.map((element)=>{
            return <div className="col-md-3"  key={element.url}>
-           <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,80):""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} mode = {mode}/>
+           <NewsItem title={element.title?.slice(0,45)} description={element.description?element.description.slice(0,80):""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} mode = {mode}/>
            </div>
   })}
        
