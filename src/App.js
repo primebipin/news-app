@@ -4,6 +4,8 @@ import './App.css';
 import React, {useState } from 'react'
 import NavBar from './Components/NavBar';
 import News from './Components/News';
+
+
 // import NewsItem from './Components/NewsItem';
 
 import {
@@ -29,10 +31,12 @@ function App() {
       document.body.style.color='#232931';
     }
   }
+ 
 
     return (
       <div>
         <Router>
+          
           <NavBar mode={mode} toggleMode={toggleMode}/>
            <Routes>
         
