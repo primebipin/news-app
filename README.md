@@ -2,6 +2,7 @@
 
 # Getting Started with Create React App
 
+#The Api uses this app is not allowing to deploy on any site, only works in localhost
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
