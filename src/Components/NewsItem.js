@@ -1,32 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+ import './newsItem.css'
 
-// import './App.css'
-export class NewsItem extends Component {
+const NewsItem = (props)=> {
+   let { title, description, imageUrl, newsUrl, author, date, source,mode } = props;
+   
 
+   let myStyle= {
+    color: props.mode==='dark'?'white':'black',
+    backgroundColor: props.mode==='dark'?'#3e454e':'white'
+ }
 
-  render() {
-   let {title, description,imageUrl,newsUrl,author,date,source,mode}=this.props;
-    return (
-   <div className='my-3'>
-      <div className={` ${mode==='light'?'dark':'light'} `}>
-      <div className={`absolute right-0 top-0 rounded-lg bg-red-500 px-2 py-1 text-sm font-semibold ${mode==='dark'?'dark':'light'}`}>
-          {source}
-        </div>
-         <img src={imageUrl?imageUrl:"https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg"} className="card-img-top" alt="..."/>
-         <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <p className="card-textZ">{description}</p>
-            <p className="card-text"><small className={mode==='dark'?'dark':'light'}>By {!author?"Unknown":author} on {new Date(date).toGMTString()}</small></p>
-            <a href={newsUrl}   className={`btn btn-primary`}>Read more</a>
-         </div>
-      </div>
-   </div>
-      
-    )
-  }
+   return (
+       <div className="my-3">
+           <div className={`card`} style={myStyle}>
+               <div style={{
+                   display: 'flex',
+                   justifyContent: 'flex-end',
+                   position: 'absolute',
+                   right: '0'
+               }
+               }> 
+                   <span className= {`badge rounded-pill bg-${mode==='dark'?'the':'danger'}`}> {source} </span>
+               </div>
+               <img src={!imageUrl ? "https://fdn.gsmarena.com/imgroot/news/21/08/xiaomi-smart-home-india-annoucnements/-476x249w4/gsmarena_00.jpg" : imageUrl} className="card-img-top" alt="..." />
+               <div className="card-body" style={myStyle}>
+                   <h5 className="card-title">{title}  </h5>
+                   <p className="card-text">{description}</p>
+                   <p className="card-text"><small className={`text-${myStyle}`}>By {!author ? "Unknown" : author} on  {new Date(date).toGMTString()}</small></p>
+                   <a rel="noreferrer" href={newsUrl} target="_blank" className={`btn btn-${mode==='dark'?'dark':'primary'}`}>Read More</a>
+               </div>
+           </div>
+       </div>
+   )
+
 }
-
 
 export default NewsItem
